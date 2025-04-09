@@ -1,5 +1,6 @@
 import requests
 import json
+from flask import Response
 
 def emotion_detector(text_to_analyse):
     if not text_to_analyse:
@@ -17,7 +18,7 @@ def emotion_detector(text_to_analyse):
     myobj = { "raw_document": { "text": text_to_analyse } }
 
    
-    if response.status_code == 200:
+    if Response.status_code == 200:
         formatted_response = json.loads(response.text).get("emotionPredictions", [])
             
         if formatted_response:
@@ -33,7 +34,7 @@ def emotion_detector(text_to_analyse):
             anger_score = disgust_score = fear_score = joy_score = sadness_score = 0
             dominant_emotion = "unknown"
         
-    elif response.status_code == 400:
+    elif Response.status_code == 400:
         return {
             'anger': None, 
             'disgust': None, 
@@ -43,7 +44,7 @@ def emotion_detector(text_to_analyse):
             'dominant_emotion': None
         }
         
-    elif response.status_code == 500:
+    elif Response.status_code == 500:
         return {
             'anger': None, 
             'disgust': None, 
